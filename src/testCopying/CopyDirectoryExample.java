@@ -59,7 +59,8 @@ public class CopyDirectoryExample
     		   copyFolder(srcFile,destFile);
     		}
  
-    	}else{
+    	}else
+    	{
     		//if file, then copy it
     		//Use bytes stream to support all file types
     		InputStream in = new FileInputStream(src);
