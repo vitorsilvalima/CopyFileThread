@@ -3,24 +3,14 @@ import java.io.File;
 import java.io.IOException;
 public class CopyThread implements Runnable
 {
-	private File src;
-	private File dest;
-	public CopyThread(File src, File dest)
+	private CopyData cp;
+	public CopyThread(CopyData cp)
 	{
-		this.src=src;
-		this.dest=dest;
+		this.cp=cp;
 	}
 	@Override
 	public void run() 
 	{
-		// TODO Auto-generated method stub
-		CopyData cp = new CopyData();
-		try {
-			cp.copyFolder(src, dest);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		cp.
 	}
-	
 }

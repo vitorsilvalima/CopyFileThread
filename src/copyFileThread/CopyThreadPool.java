@@ -1,60 +1,43 @@
 package copyFileThread;
-
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.swing.JOptionPane;
-
-
-public class CopyThreadPool {
-
+import javax.swing.JProgressBar;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+public class CopyThreadPool 
+{
+	public static long recursiveCount(File srcFile)
+	{
+		if(srcFile.isDirectory())
+		{
+			long count=1;
+			if(srcFile.listFiles()!=null)
+			{
+			   	for(File file: srcFile.listFiles())
+			   	{
+			   		if(file!=null)
+			   		{
+				   		count+=recursiveCount(file);
+			    	}
+			   	}
+			}
+		    return count;
+		}
+		else
+		{
+			return 1;
+		}
+	}
 	public static void main(String[] args)
 	{
-    	File srcFolder = new File("c:\\vitor");
+    	File srcFolder = new File("D://");
     	File destFolder = new File("c:\\vitor-new");
- 
-    	//make sure source exists
-    	if(!srcFolder.exists()){
- 
-           System.out.println("Directory does not exist.");
-           //just exit
-           System.exit(0);
- 
-        }else{
- 
-           try{
-           	System.out.println("Done");		
-    		ExecutorService executor = Executors.newFixedThreadPool(4);
-    		Runnable task =  CopyThread(srcFolder,destFolder);
-    				
-    		
-    		
-    		
-    		
-    		Runnable task = new CopyThread(src, dest)
-    	            executor.execute(task);
-
-            executor.shutdown();
-            while (!executor.isTerminated()) 
-            {
-            }
-    		JOptionPane.showMessageDialog(null, matrix.formatOutPut(), "RESULT!!!", 1);
-        	   
-      
-          
-           
-           
-           
-           
-           
-           }catch(IOException e){
-        	e.printStackTrace();
-        	//error, just exit
-                System.exit(0);
-           }
-        }
+    	long countFile=recursiveCount(srcFolder);
+    	System.out.println("There are "+countFile +" including folders!");
+    	
 	}
-
 }
