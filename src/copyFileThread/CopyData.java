@@ -21,6 +21,15 @@ public class CopyData
 	}
 	 public void copyFolder(File src, File dest)throws IOException
 	 {
+		 	try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+	    	if(src!=null)
+	    	{
 		    	if(src.isDirectory()){
 		    		progressCounter++;
 		    		//if directory not exists, create it
@@ -35,7 +44,7 @@ public class CopyData
 		    		for (String file : files) 
 		    		{
 		    		   //construct the src and dest file structure
-		    			if(file!=null)
+		    		if(file!=null && !file.equals(""))
 		    			{
 				    		   File srcFile = new File(src, file);
 				    		   File destFile = new File(dest, file);
@@ -44,12 +53,17 @@ public class CopyData
 		    			}
 		    		}
 		 
-		    	}else
+		    	}	    	
+		    	else if(src.isFile())
 		    	{
+		    		OutputStream out =null;
+		    		InputStream in=null;
+		    		try
+		    		{
 		    		//if file, then copy it
 		    		//Use bytes stream to support all file types
-		    		InputStream in = new FileInputStream(src);
-		    	        OutputStream out = new FileOutputStream(dest); 
+		    		in = new FileInputStream(src);
+		    	        out= new FileOutputStream(dest); 
 		 
 		    	        byte[] buffer = new byte[1024];
 		 
@@ -62,6 +76,19 @@ public class CopyData
 		    	        in.close();
 		    	        out.close();
 		    	        System.out.println("File copied from " + src + " to " + dest);
+		    		}
+		    		finally
+		    		{
+		    			if(in!=null)
+		    			{
+		    				in.close();
+		    			}
+		    			if(out!=null)
+		    			{
+		    				out.close();
+		    			}
+		    		}
 		    	}
+	    	}
 	 }
 }

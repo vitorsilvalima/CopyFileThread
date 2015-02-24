@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
 public class CopyThreadPool 
 {
 	public static long recursiveCount(File srcFile)
@@ -34,9 +36,18 @@ public class CopyThreadPool
 	}
 	public static void main(String[] args)
 	{
-    	File srcFolder = new File("D://");
-    	File destFolder = new File("c:\\vitor-new");
+    	File srcFolder = new File("C://vitor");
+    	File destFolder = new File("c://vitor-new");
+    	CopyData cD = new CopyData();
     	long countFile=recursiveCount(srcFolder);
+    	System.out.println("There are "+countFile +" including folders!");
+    	ExecutorService executor = Executors.newFixedThreadPool(2);
+	    executor.execute(new CopyThread(cD,srcFolder,destFolder));
+	    executor.execute(new CheckProgressThread(cD,countFile));
+        executor.shutdown();
+        while (!executor.isTerminated()) 
+        {
+        }
     	System.out.println("There are "+countFile +" including folders!");
     	
 	}
